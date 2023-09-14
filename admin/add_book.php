@@ -1,13 +1,6 @@
 <?php
 require('functions.php');
 session_start();
-error_reporting(E_ERROR | E_PARSE);
-if (!$_SESSION['email'])
-{
-  header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
-  die ("<h2>Access Denied!</h2> This file is protected and not available to public.");
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,65 +102,33 @@ if (!$_SESSION['email'])
   </div>
 
   <!------------------------------------------------------------------**THIS IS MAIN CONTENTS** ---------------------------------------------------------->
-  <br><br>
-  <div class="container">
+  <br>
   <div class="row">
-    <div class="col-md-3">
-       <div class="card bg-light" style="width: 300px;">
-            <div class="card-header">
-              Registered Users:
+    <div class="col-lg-4 col-md-4"></div>
+    <div class="col-lg-4 col-md-4">
+        <form action="" method="post">
+            <div class="form-group">
+                <label>Book Name:</label>
+                <input type="text" name="book_name" class="form-control" required>
             </div>
-            <div class="card-body">
-              <p class="card-text">No. of total users: <?php echo get_user_count(); ?></p><br>
-              <a href="reg_users.php" class="btn btn-danger" target="_blank">View Registered Users</a>
+            <div class="form-group">
+                <label>Author:</label>
+                <input type="text" name="author" class="form-control" required>
             </div>
-      </div>
+            <div class="form-group">
+                <label>Book Category:</label>
+                <input type="text" name="category" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Book Price:</label>
+                <input type="text" name="book_price" class="form-control" required>
+            </div>
+            <div class="text-center">
+            <button type="button" class="btn btn-primary">Add Book</button>
+            </div>
+        </form>
     </div>
-    <div class="col-md-3">
-       <div class="card bg-light" style="width: 300px;">
-            <div class="card-header">
-              Registered Books:
-            </div>
-            <div class="card-body">
-              <p class="card-text">No. of available books: <?php echo get_book_count(); ?></p><br>
-              <a href="reg_book.php" class="btn btn-primary" target="_blank">View Registered Books</a>
-            </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-       <div class="card bg-light" style="width: 300px;">
-            <div class="card-header">
-              Registered Category:
-            </div>
-            <div class="card-body">
-              <p class="card-text">No. of book's categories: <?php echo get_category_count(); ?></p><br>
-              <a href="reg_cat.php" class="btn btn-info" target="_blank">View Categories</a>
-            </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-       <div class="card bg-light" style="width: 300px;">
-            <div class="card-header">
-              Registered Authors:
-            </div>
-            <div class="card-body">
-              <p class="card-text">No. of registered authors: <?php echo get_author_count(); ?></p><br>
-              <a href="reg_auth.php" class="btn btn-warning" target="_blank">View Registered Authors</a>
-            </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-       <div class="card bg-light" style="width: 300px; margin-top:7vh;">
-            <div class="card-header">
-              Issued Books:
-            </div>
-            <div class="card-body">
-              <p class="card-text">No. of issued books: <?php echo get_issuedBook_count(); ?></p><br>
-              <a href="view_issued_book.php" class="btn btn-success" target="_blank">View Issued Authors</a>
-            </div>
-      </div>
-    </div>
-  </div>
+    <div class="col-lg-4 col-md-4"></div>
   </div>
 
 </body>
