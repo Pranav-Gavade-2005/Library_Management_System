@@ -28,7 +28,7 @@ if (!$_SESSION['email'])
   <!------------------------------------------------------------------**THIS IS NAVBAR** ---------------------------------------------------------->
   <nav class="navbar navbar-expand-lg  navbar-expand-sm  navbar-dark bg-dark ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="admin_dashboard.php">
         Library Management System
       </a>  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -163,7 +163,7 @@ if (!$_SESSION['email'])
             </div>
             <div class="card-body">
               <p class="card-text">No. of issued books: <?php echo get_issuedBook_count(); ?></p><br>
-              <a href="view_issued_book.php" class="btn btn-success" target="_blank">View Issued Authors</a>
+              <a href="view_issued_book.php" class="btn btn-success" target="_blank">View Issued Books</a>
             </div>
       </div>
     </div>

@@ -116,11 +116,8 @@ if (!$_SESSION['email'])
          <table class="table table-bordered table-hover">
             <thead>
              <tr>
-                <th>Book Name</th>
-                <th>Author ID</th>
-                <th>Category</th>
-                <th>Book No</th>
-                <th>Price</th>
+                <th>Category Id</th>
+                <th>Category Name</th>
                 <th>Action</th>
              </tr>
              </thead>
@@ -128,23 +125,22 @@ if (!$_SESSION['email'])
                 <?php
                     $connection = mysqli_connect("localhost", "root", "");
                     $db = mysqli_select_db($connection, "lms");
-                    $query = "select * from books";
+                    $query = "select * from category";
                     $query_run = mysqli_query($connection, $query);
 
                     while ($row = mysqli_fetch_assoc($query_run))
                     { ?><tr>
-                            <td><?php echo $row['book_name'];?></td>
-                            <td><?php echo $row['author_id'];?></td>
                             <td><?php echo $row['cat_id'];?></td>
-                            <td><?php echo $row['book_no'];?></td>
-                            <td><?php echo $row['book_price'];?></td>
+                            <td><?php echo $row['cat_name'];?></td>
                             <td>
-                                <!-- //passing url through info; -->
-                                <button type="button" class="btn btn-primary">
-                                <a href="edit_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white">Edit</a></button>
+                            <button type="button" class="btn btn-primary">
+                                <a href="edit_cat.php?cid=<?php echo $row['cat_id']?>"    style="text-decoration: none; color:white">  
+                                   Edit</a>
+                                </button>
                                 <button type="button" class="btn btn-danger">
-                                <a href="delete_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white;"
-                                onclick="return confirm('Are you sure to delete this book?');">Delete</a></button>
+                                <a href="delete_cat.php?cid=<?php echo $row['cat_id']?>"" style="text-decoration: none; color:white;" onclick="return confirm('Are you sure to delete this category?');">
+                                   Delete</a>
+                                </button>
                             </td>
                         </tr>
                     <?php }   ?>

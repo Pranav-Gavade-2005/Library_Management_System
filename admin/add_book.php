@@ -21,7 +21,7 @@ session_start();
   <!------------------------------------------------------------------**THIS IS NAVBAR** ---------------------------------------------------------->
   <nav class="navbar navbar-expand-lg  navbar-expand-sm  navbar-dark bg-dark ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="admin_dashboard.php">
         Library Management System
       </a>  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -112,24 +112,37 @@ session_start();
                 <input type="text" name="book_name" class="form-control" required>
             </div>
             <div class="form-group">
-                <label>Author:</label>
-                <input type="text" name="author" class="form-control" required>
+                <label>Author ID:</label>
+                <input type="text" name="book_author" class="form-control" required>
             </div>
             <div class="form-group">
-                <label>Book Category:</label>
+                <label>Book Category ID:</label>
                 <input type="text" name="category" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Book No:</label>
+                <input type="text" name="book_no" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Book Price:</label>
                 <input type="text" name="book_price" class="form-control" required>
             </div>
             <div class="text-center">
-            <button type="button" class="btn btn-primary">Add Book</button>
-            </div>
+            <input type="submit" class ="btn btn-primary" value="Add Book" name="add_book">           
+           </div>
         </form>
     </div>
     <div class="col-lg-4 col-md-4"></div>
   </div>
+  <?php
+  if(isset($_POST['add_book']))
+  {
+        $connection = mysqli_connect("localhost", "root", "");
+        $db = mysqli_select_db($connection, "lms");
+        $query = "insert into books values(null, '$_POST[book_name]', $_POST[book_author], $_POST[category], $_POST[book_no], $_POST[book_price])";
+        $query_run = mysqli_query($connection, $query);
+  }
+  ?>
 
 </body>
 </html>

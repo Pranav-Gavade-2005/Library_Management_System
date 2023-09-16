@@ -1,13 +1,25 @@
 <?php
 require('functions.php');
 session_start();
-error_reporting(E_ERROR | E_PARSE);
-if (!$_SESSION['email'])
-{
-  header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
-  die ("<h2>Access Denied!</h2> This file is protected and not available to public.");
-}
 
+        $connection = mysqli_connect("localhost", "root", "");
+        $db = mysqli_select_db($connection, "lms");
+        $book_no = "";
+        $book_name = "";
+        $author_id = "";
+        $cat_id = "";
+        $book_price = "";
+
+        $query = "select * from books where book_no = $_GET[bn]";
+        $query_run = mysqli_query($connection, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) 
+        {
+            $book_name = $row['book_name'];
+            $book_no= $row['book_no'];
+            $author_id = $row['author_id'];
+            $cat_id = $row['cat_id'];
+            $book_price = $row['book_price'];
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,50 +121,49 @@ if (!$_SESSION['email'])
   </div>
 
   <!------------------------------------------------------------------**THIS IS MAIN CONTENTS** ---------------------------------------------------------->
-  <br><br>
+  <br>
   <div class="row">
-    <div class="col-lg-2 col-md-2"></div>
-    <div class="col-lg-8 col-md-8">
-         <table class="table table-bordered table-hover">
-            <thead>
-             <tr>
-                <th>Book Name</th>
-                <th>Author ID</th>
-                <th>Category</th>
-                <th>Book No</th>
-                <th>Price</th>
-                <th>Action</th>
-             </tr>
-             </thead>
-             <tbody>
-                <?php
-                    $connection = mysqli_connect("localhost", "root", "");
-                    $db = mysqli_select_db($connection, "lms");
-                    $query = "select * from books";
-                    $query_run = mysqli_query($connection, $query);
-
-                    while ($row = mysqli_fetch_assoc($query_run))
-                    { ?><tr>
-                            <td><?php echo $row['book_name'];?></td>
-                            <td><?php echo $row['author_id'];?></td>
-                            <td><?php echo $row['cat_id'];?></td>
-                            <td><?php echo $row['book_no'];?></td>
-                            <td><?php echo $row['book_price'];?></td>
-                            <td>
-                                <!-- //passing url through info; -->
-                                <button type="button" class="btn btn-primary">
-                                <a href="edit_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white">Edit</a></button>
-                                <button type="button" class="btn btn-danger">
-                                <a href="delete_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white;"
-                                onclick="return confirm('Are you sure to delete this book?');">Delete</a></button>
-                            </td>
-                        </tr>
-                    <?php }   ?>
-              </tbody>
-           </table>
+    <div class="col-lg-4 col-md-4"></div>
+    <div class="col-lg-4 col-md-4">
+        <form action="" method="post">
+            <div class="form-group">
+                <label>Book No:</label>
+                <input type="text" name="book_no" class="form-control" value="<?php echo $book_no; ?>"required>
+            </div>
+            <div class="form-group">
+                <label>Book Name:</label>
+                <input type="text" name="book_name" class="form-control" value="<?php echo $book_name; ?>"required>
+            </div>
+            <div class="form-group">
+                <label>Author ID:</label>
+                <input type="text" name="author_id" class="form-control" value="<?php echo $author_id; ?>"required>
+            </div>
+            <div class="form-group">
+                <label>Category ID:</label>
+                <input type="text" name="cat_id" class="form-control" value="<?php echo $cat_id; ?>"required>
+            </div>
+            <div class="form-group">
+                <label>Book Price:</label>
+                <input type="text" name="book_price" class="form-control" value="<?php echo $book_price; ?>"required>
+            </div>
+    
+            <div class="text-center">
+            <input type="submit" class ="btn btn-primary" value="Update Book" name="update_book">           
+           </div>
+        </form>
     </div>
-    <div class="col-lg-2 col-md-2"></div>
+    <div class="col-lg-4 col-md-4"></div>
   </div>
+  <?php
+  if(isset($_POST['update_book']))
+  {
+    $connection = mysqli_connect("localhost", "root", "");
+    $db = mysqli_select_db($connection, "lms");
+    $query = "update books set book_name = '$_POST[book_name]', author_id = $_POST[author_id], cat_id = $_POST[cat_id], book_price = $_POST[book_price] where book_no = $_GET[bn]";
+    $query_run = mysqli_query($connection, $query);
+    echo "<script>window.location.href = 'manage_book.php';</script>";
+  }
+  ?>
 
 </body>
 </html>

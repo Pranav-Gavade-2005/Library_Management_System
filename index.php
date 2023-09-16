@@ -111,6 +111,7 @@ session_start();
             if ($rows['password'] == $_POST['password']) {
               $_SESSION['name'] = $rows['name'];
               $_SESSION['email'] = $rows['email'];
+              $_SESSION['id'] = $rows['id'];
               echo "<script>window.location.href = 'user_dashboard.php'</script>";
             } else {
 

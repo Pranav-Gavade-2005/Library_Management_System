@@ -29,7 +29,7 @@
   <!------------------------------------------------------------------**THIS IS NAVBAR** ---------------------------------------------------------->
   <nav class="navbar navbar-expand-lg  navbar-expand-sm  navbar-dark bg-dark ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="admin_dashboard.php">
         Library Management System
       </a>  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"

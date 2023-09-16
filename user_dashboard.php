@@ -1,5 +1,25 @@
 <?php
 session_start();
+error_reporting(E_ERROR | E_PARSE);
+if (!$_SESSION['email'])
+{
+  header("Location: index.php");
+}
+
+
+function get_book_count()
+{
+  $connection = mysqli_connect("localhost", "root", "");
+  $db = mysqli_select_db($connection, "lms");
+  $book_count = "";
+  $query = "select count(*) as user_issued_book from issued_books where student_id = $_SESSION[id]";
+  $query_run = mysqli_query($connection, $query);
+
+  while ($row = mysqli_fetch_assoc($query_run)) {
+      $book_count = $row['user_issued_book'];
+  }
+  return($book_count);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +78,23 @@ session_start();
   </div>
 
   <!------------------------------------------------------------------**THIS IS MAIN CONTENTS** ---------------------------------------------------------->
-  
+  <br><br>
+  <div class="row">
+    <div class="col-lg-3 col-md-3"></div>
+    <div class="col-lg-3 col-md-3">
+      <div class="card bg-light" style="width:25vw;">
+        <div class="card-header">
+          <b>Issued Books:</b>
+        </div>
+        <div class="card-body">
+          <p class="card-text">No. of issued books: <?php echo get_book_count(); ?></p>
+          <a href="view_issued_book.php" class="btn btn-danger" target="_blank">View Issued Books</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3"></div>
+    <div class="col-lg-3 col-md-3"></div>
+  </div>
 
 </body>
 </html>

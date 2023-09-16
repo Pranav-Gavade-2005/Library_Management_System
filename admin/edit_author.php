@@ -1,13 +1,20 @@
 <?php
 require('functions.php');
 session_start();
-error_reporting(E_ERROR | E_PARSE);
-if (!$_SESSION['email'])
-{
-  header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
-  die ("<h2>Access Denied!</h2> This file is protected and not available to public.");
-}
 
+        $connection = mysqli_connect("localhost", "root", "");
+        $db = mysqli_select_db($connection, "lms");
+        $author_id = "";
+        $author_name = "";
+
+        $query = "select * from authors where author_id = $_GET[aid]";
+        $query_run = mysqli_query($connection, $query);
+        while ($row = mysqli_fetch_assoc($query_run)) 
+        {
+            $author_name = $row['author_name'];
+            $author_id = $row['author_id'];
+          
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,50 +116,37 @@ if (!$_SESSION['email'])
   </div>
 
   <!------------------------------------------------------------------**THIS IS MAIN CONTENTS** ---------------------------------------------------------->
-  <br><br>
+  <br>
   <div class="row">
-    <div class="col-lg-2 col-md-2"></div>
-    <div class="col-lg-8 col-md-8">
-         <table class="table table-bordered table-hover">
-            <thead>
-             <tr>
-                <th>Book Name</th>
-                <th>Author ID</th>
-                <th>Category</th>
-                <th>Book No</th>
-                <th>Price</th>
-                <th>Action</th>
-             </tr>
-             </thead>
-             <tbody>
-                <?php
-                    $connection = mysqli_connect("localhost", "root", "");
-                    $db = mysqli_select_db($connection, "lms");
-                    $query = "select * from books";
-                    $query_run = mysqli_query($connection, $query);
-
-                    while ($row = mysqli_fetch_assoc($query_run))
-                    { ?><tr>
-                            <td><?php echo $row['book_name'];?></td>
-                            <td><?php echo $row['author_id'];?></td>
-                            <td><?php echo $row['cat_id'];?></td>
-                            <td><?php echo $row['book_no'];?></td>
-                            <td><?php echo $row['book_price'];?></td>
-                            <td>
-                                <!-- //passing url through info; -->
-                                <button type="button" class="btn btn-primary">
-                                <a href="edit_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white">Edit</a></button>
-                                <button type="button" class="btn btn-danger">
-                                <a href="delete_book.php?bn=<?php echo $row['book_no']?>" style="text-decoration: none; color:white;"
-                                onclick="return confirm('Are you sure to delete this book?');">Delete</a></button>
-                            </td>
-                        </tr>
-                    <?php }   ?>
-              </tbody>
-           </table>
+    <div class="col-lg-4 col-md-4"></div>
+    <div class="col-lg-4 col-md-4">
+        <form action="" method="post">
+            <div class="form-group">
+                <label>Author ID:</label>
+                <input type="text" name="author_id" class="form-control" value="<?php echo $author_id; ?>"required>
+            </div>
+            <div class="form-group">
+                <label>Author Name:</label>
+                <input type="text" name="author_name" class="form-control" value="<?php echo $author_name; ?>"required>
+            </div>
+        
+            <div class="text-center">
+            <input type="submit" class ="btn btn-primary" value="Update Author" name="update_author">           
+           </div>
+        </form>
     </div>
-    <div class="col-lg-2 col-md-2"></div>
+    <div class="col-lg-4 col-md-4"></div>
   </div>
+  <?php
+  if(isset($_POST['update_author']))
+  {
+    $connection = mysqli_connect("localhost", "root", "");
+    $db = mysqli_select_db($connection, "lms");
+    $query = "update authors set  author_id = $_POST[author_id], author_name = '$_POST[author_name]' where author_id = $_GET[aid]";
+    $query_run = mysqli_query($connection, $query);
+    echo "<script>window.location.href = 'manage_author.php';</script>";
+  }
+  ?>
 
 </body>
 </html>

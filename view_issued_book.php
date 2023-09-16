@@ -2,22 +2,24 @@
     session_start();
     $connection = mysqli_connect("localhost", "root", "");
     $db = mysqli_select_db($connection, "lms");
-    $cat_name = "";
-    $query = "select * from category";
+    $book_name = "";
+    $author = "";
+    $book_no = "";
+    $query = "select book_name, book_author, book_no from issued_books where student_id = $_SESSION[id] and status = 1";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>ADMIN DASHBOARD</title>
+  <title>USER DASHBOARD</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../bootstrap-5.0.2-dist/css/bootstrap.min.css">
-  <script type="text/javascript" src="../bootstrap-5.0.2-dist/js/juqery_latest.js"></script>
-  <script type="text/javascript" src="../bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <script type="text/javascript" src="bootstrap-5.0.2-dist/js/juqery_latest.js"></script>
+  <script type="text/javascript" src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
   <style>
-    <?php include '../assets/index.css'; ?>
+    <?php include 'assets/index.css'; ?>
   </style>
 </head>  
 
@@ -25,7 +27,7 @@
   <!------------------------------------------------------------------**THIS IS NAVBAR** ---------------------------------------------------------->
   <nav class="navbar navbar-expand-lg  navbar-expand-sm  navbar-dark bg-dark ">
     <div class="container-fluid">
-      <a class="navbar-brand" href="admin_dashboard.php">
+      <a class="navbar-brand" href="user_dashboard.php">
         Library Management System
       </a>  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -54,57 +56,13 @@
       </div>
     </div>
   </nav>
-    <!------------------------------------------------------------------**THIS IS DASHBOARD NAVBAR** ---------------------------------------------------------->
 
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd; padding-top: 0; padding-bottom: 0;">
-		<div class="container-fluid">
-			
-		    <ul class="nav navbar-nav navbar-center">
-		      <li class="nav-item" >
-		        <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
-		      </li>
-
-		      <li class="nav-item dropdown">
-	        	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="padding-left: 3vw;">Books </a>
-	        	<div class="dropdown-menu">
-	        		<a class="dropdown-item" href="add_book.php">Add New Book</a>
-	        		<div class="dropdown-divider"></div>
-	        		<a class="dropdown-item" href="manage_book.php">Manage Books</a>
-	        	</div>
-		      </li>
-
-		      <li class="nav-item dropdown">
-	        	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="padding-left: 3vw;">Category </a>
-	        	<div class="dropdown-menu">
-	        		<a class="dropdown-item" href="add_cat.php">Add New Category</a>
-	        		<div class="dropdown-divider"></div>
-	        		<a class="dropdown-item" href="manage_cat.php">Manage Category</a>
-	        	</div>
-		      </li>
-
-		      <li class="nav-item dropdown">
-	        	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="padding-left: 3vw;">Authors</a>
-	        	<div class="dropdown-menu">
-	        		<a class="dropdown-item" href="add_author.php">Add New Author</a>
-	        		<div class="dropdown-divider"></div>
-	        		<a class="dropdown-item" href="manage_author.php">Manage Author</a>
-	        	</div>
-		      </li>
-
-	          <li class="nav-item">
-		        <a class="nav-link" href="issue_book.php" style="padding-left: 3vw;">Issue Book</a>
-		        </li>
-            
-		    </ul>
-		</div>
-	</nav>
   <!------------------------------------------------------------------**THIS IS MARQUEE** ---------------------------------------------------------->
   <div class="bg-warning  text-danger">
     <span>
       <marquee style="font-weight: bolder">THIS IS LIBARARY MANAGEMENT SYSTEM</marquee>
     </span>
   </div>
-
   <!------------------------------------------------------------------**THIS IS MAIN CONTENTS** ---------------------------------------------------------->
   <br><br>
   <div class="row">
@@ -113,18 +71,23 @@
         <form action="">
             <table class="table-bordered" width="900px" style="text-align: center;">
                  <tr>
-                    <th>Category Name: </th>
+                    <th>Book Name: </th>
+                    <th>Author: </th>
+                    <th>Book No: </th>
                  </tr>
                  <?php
 
                  $query_run = mysqli_query($connection, $query);
                  while ($rows = mysqli_fetch_assoc($query_run)) 
                  {
-                    $cat_name = $rows['cat_name'];
-                    
+                    $book_name = $rows['book_name'];
+                    $author = $rows['book_author'];
+                    $book_no = $rows['book_no'];
                  ?>
                  <tr>
-                    <td><?php  echo  $cat_name; ?></td>
+                    <td><?php  echo  $book_name; ?></td> 
+                    <td><?php  echo  $author; ?></td>
+                    <td><?php  echo  $book_no; ?></td>
                  </tr>
                  <?php
                  }
@@ -136,4 +99,4 @@
   </div>
 
 </body>
-</html>
+</html> 
