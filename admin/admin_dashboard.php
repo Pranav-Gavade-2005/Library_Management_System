@@ -4,8 +4,8 @@ session_start();
 error_reporting(E_ERROR | E_PARSE);
 if (!$_SESSION['email'])
 {
-  header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
-  die ("<h2>Access Denied!</h2> This file is protected and not available to public.");
+  // header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
+   die ("<h2>Access Denied!</h2> This file is protected and not available to public.");
 }
 
 ?>
